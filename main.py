@@ -3,7 +3,7 @@ import altair as alt
 import streamlit as st
 
 #Sidebar -- Select
-servers = ["Amanda", "Angie", "Ben", "Haley", "Jill", "Kara", "Kayla", "Kayla2", "Peter", "Sean", "Sherrie", "Jason", "Jimmy", "Katie"] # TODO Add names
+servers = ["Amanda", "Angie", "Ben", "Haley", "Jill", "Kara", "Kayla", "Kayla2", "Peter", "Sean", "Sherrie", "Jason", "Jimmy", "Katie"] 
 bussers = ["Alex", "Alex J", "Ana", "Antuan", "Bobby", "Brock", "Cam", "G", "Joe M", "Joey", "Kaitlin D", "Katie L", "Maddie P", "Madison K", "Noah", "Mark", "Savannah", "Sean", "John C", "Robbie K", "Tyler", "Other", "Other 2"]
 runners = ["Alex", "Alex J", "Ana", "Antuan", "Bobby", "Brock", "Cam", "G", "Joe M", "Joey", "Kaitlin D", "Katie L", "Maddie P", "Madison K", "Noah", "Mark", "Savannah", "Sean", "John C", "Robbie K", "Tyler", "Other", "Other 2"]
 

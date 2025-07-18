@@ -3,9 +3,9 @@ import altair as alt
 import streamlit as st
 
 #Sidebar -- Select
-servers = ["Server 1", "Server 2", "Server 3", "Server 4", "Server 5"] # TODO Add names
-bussers = ["Busser 1", "Busser 2", "Busser 3"]
-runners = ["Runner 1", "Runner 2", "Runner 3"]
+servers = ["Amanda", "Angie", "Ben", "Haley", "Jill", "Kara", "Kayla", "Kayla2", "Peter", "Sean", "Sherrie", "Jason", "Jimmy", "Katie"] # TODO Add names
+bussers = ["Alex", "Alex J", "Ana", "Antuan", "Bobby", "Brock", "Cam", "G", "Joe M", "Joey", "Kaitlin D", "Katie L", "Maddie P", "Madison K", "Noah", "Mark", "Savannah", "Sean", "John C", "Robbie K", "Tyler", "Other", "Other 2"]
+runners = ["Alex", "Alex J", "Ana", "Antuan", "Bobby", "Brock", "Cam", "G", "Joe M", "Joey", "Kaitlin D", "Katie L", "Maddie P", "Madison K", "Noah", "Mark", "Savannah", "Sean", "John C", "Robbie K", "Tyler", "Other", "Other 2"]
 
 st.sidebar.header("Data")
 servers_on = st.sidebar.multiselect("Servers on:", servers,)
@@ -116,52 +116,57 @@ combined_money_earned = list(money_earned_servers.values()) + list(money_earned_
 combined_hours_worked = list(time_worked_servers.values()) + list(time_worked_bussers.values())
 
 
-for busser in bussers_on:
-    tips.append(0) #even out list
-    sales.append(0)
-
 type_of_employee = []
 for server in servers_on:
     type_of_employee.append("SERVER") #For coloring purposes later
 for busser in bussers_on:
     type_of_employee.append("BUSSER")
-data = {
-    "Name": combined_names,
-    "Money Made": combined_money_earned,
-    "Hours Worked": combined_hours_worked,
-    "Tips Made": tips,
-    "Sales Made": sales,
-    "Type": type_of_employee
-}
+    tips.append(0) #even out list
+    sales.append(0)
 
-df = pd.DataFrame(data)
-df["Ratio"] = round(df["Tips Made"] / df["Sales Made"], 2)
+try:
+    data = {
+        "Name": combined_names,
+        "Money Made": combined_money_earned,
+        "Hours Worked": combined_hours_worked,
+        "Tips Made": tips,
+        "Sales Made": sales,
+        "Type": type_of_employee
+    }
 
-print(df)
+    df = pd.DataFrame(data)
+    df["Ratio"] = round(df["Tips Made"] / df["Sales Made"], 2)
 
-df_servers = df[df["Type"] == "SERVER"]
-df_servers = df_servers.sort_values("Ratio", ascending=False)
-highest_tipped_ratio = df_servers.iloc[0]["Ratio"]
-highest_tipped_ratio_person = df_servers.iloc[0]["Name"]
+    print(df)
 
+    df_servers = df[df["Type"] == "SERVER"]
+    df_servers = df_servers.sort_values("Ratio", ascending=False)
+
+    highest_tipped_ratio = df_servers.iloc[0]["Ratio"]
+    highest_tipped_ratio_person = df_servers.iloc[0]["Name"]
+except:
+    st.info("Not enough data")
 #
 ##
 ###
 ####
 ##### Main Dashboard:
-st.title("Stats")
-col1, col2, col3, col4= st.columns([1,1,1,1])
-col1.metric(label = "Total sales", value = f"${total_sales}")
-col2.metric(label = "Total tips", value =f"${total_tips}")
-col3.metric(label = "Highest earner", value =f"{df_servers["Name"].iloc[0]}")
-col4.metric(
-    label="Highest percentage tipped",
-    value=highest_tipped_ratio_person,
-    delta=f"{highest_tipped_ratio * 100}%"
-)
+try:
+    st.title("Stats")
+    col1, col2, col3, col4= st.columns([1,1,1,1])
+    col1.metric(label = "Total sales", value = f"${total_sales}")
+    col2.metric(label = "Total tips", value =f"${total_tips}")
+    col3.metric(label = "Highest earner", value =f"{df_servers["Name"].iloc[0]}")
+    col4.metric(
+        label="Highest percentage tipped",
+        value=highest_tipped_ratio_person,
+        delta=f"{highest_tipped_ratio * 100}%"
+    )
+except:
+    st.info("Not enough data")
 # First Graph, Who made the most:
 st.subheader("Who brought in the most?")
-if not df_servers.empty:
+try:
     
     most_made = alt.Chart(df_servers).mark_bar().encode(
         x = alt.X("Name:N", sort="-y", title="Servers"),
@@ -171,13 +176,13 @@ if not df_servers.empty:
         width = 600, height = 400
     )
     st.altair_chart(most_made, use_container_width=True)
-else:
+except:
     st.info("Not enough data")
 #
 #
 # Second graph, Total Tip Breakdown
 st.subheader("How much everyone made")
-if not df.empty:
+try:
     total_breakdown = alt.Chart(df).mark_bar().encode(
         x = alt.X("Name:N", sort = "-y", title = "Tip breakdown"),
         y = alt.Y("Money Made:Q", title= "Tips Made ($)"),
@@ -187,8 +192,8 @@ if not df.empty:
         width = 600, height = 400
     )
     st.altair_chart(total_breakdown, use_container_width=True)
-else:
+except:
     st.info("Not enough data")
 #
 #
-# Third graph, tips_earned to money made chart
+#

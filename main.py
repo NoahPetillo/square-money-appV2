@@ -135,7 +135,7 @@ try:
     }
 
     df = pd.DataFrame(data)
-    df["Ratio"] = round(df["Tips Made"] / df["Sales Made"], 2)
+    df["Ratio"] = round(df["Tips Made"] / df["Sales Made"], 3)
 
     print(df)
 
@@ -196,4 +196,6 @@ except:
     st.info("Not enough data")
 #
 #
-#
+# Display the dataframe at the bottom
+st.markdown("### Complete DataFrame:")
+st.dataframe(df)

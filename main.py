@@ -201,4 +201,7 @@ except:
 #
 # Display the dataframe at the bottom
 st.markdown("### Complete DataFrame:")
-st.dataframe(df)
+try:
+    st.dataframe(df)
+except:
+    st.info("Not enough data to load DataFrame.")

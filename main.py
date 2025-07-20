@@ -63,11 +63,14 @@ if "Busser" in earlybird_response:
 ###
 ####
 ##### Mathy math time
+amt_bussers_on = len(bussers_on)
 total_tips = sum(tips)
 total_sales = sum(sales)
 runners_cut = len(servers_on)* len(runners_on) * 10 #runners get 10 dollars per server each
-if bussers_on == 1:
+if amt_bussers_on == 1:
     bussers_cut = 0.1 * total_tips
+elif amt_bussers_on == 2:
+    bussers_cut = 0.12 * total_tips
 else:
     bussers_cut = 0.15 * total_tips
 
